@@ -43,14 +43,17 @@ input[type="submit"] {
 	
 	--light-wrong: #f9cac5;
 	--dark-wrong: #9b2417;
+
+	--wm-green: #115740;
+	--wm-gold:  #B9975B;
 }
 
 body {
 	margin-left: 10%;
 	margin-right: 10%;
 	font-family: var(--serif-fonts);
-	background-color: var(--lightest-gray);
-	color: var(--dark-gray);
+	background-color: var(--wm-green);
+	color: var(--wm-gold);
 }
 
 #submit {
@@ -61,7 +64,7 @@ table {
 }
 
 table {
-  border: 3px solid var(--dark-gray);
+  border: 3px solid var(--wm-gold);
   margin: 10px;
 }
 th, td {
