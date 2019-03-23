@@ -45,7 +45,6 @@ document.getElementById("search").addEventListener('submit', function (e) {
 	console.log(searchql);
 	var r = db.exec(searchql);
 	var d = r[0];
-	console.log(r);
 	var results = document.getElementById('results');
 	results.innerHTML = '';
 	var fin = '<table><tr>';
