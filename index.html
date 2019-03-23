@@ -4,14 +4,21 @@
 		<title>Courselister</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=1">
+		<link rel="stylesheet" href="awesomplete.css" />
 		<link rel="stylesheet" href="style.css">
 		<script src="https://unpkg.com/vue" defer></script>
 		<script src="sql.js"></script>
-		<script src="script.js"></script>
+		<script src="awesomplete.min.js" async></script>
+		<script src="script.js" defer></script>
 	</head>
 	<body>
 		<form>
-			<input type='text' />
+			<label>Title</label>
+			<input id='title' />
+			<label>Instructor</label>
+			<input id='instr' />
+			<label>Subject</label>
+			<input id='subj' />
 			<input type='submit' />
 		</form>
 	</body>
