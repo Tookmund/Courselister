@@ -18,12 +18,13 @@ xhr.responseType = 'arraybuffer';
 xhr.onload = function(e) {
 	var uInt8Array = new Uint8Array(this.response);
 	db = new SQL.Database(uInt8Array);
-	autocomp("Title", 'Title');
-	autocomp("Instr", 'Instr');
-	autocomp("days", 'days');
-	autocomp("start", 'start');
-	autocomp("end", 'end');
-	autocomp("Subj", 'Subj');
+	var s = document.getElementById("search");
+	var inps = s.getElementsByTagName("input");
+	for (i in inps) {
+		if (inps[i].type == 'text') {
+			autocomp(inps[i].id);
+		}
+	}
 };
 xhr.send();
 console.log('begin');

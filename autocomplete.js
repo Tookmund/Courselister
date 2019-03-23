@@ -1,4 +1,5 @@
-function autocomp(sql, inpid) {
+function autocomp(sql) {
+  inpid = sql;
   var inp = document.getElementById(inpid);
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
