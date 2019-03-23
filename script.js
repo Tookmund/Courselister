@@ -22,6 +22,7 @@ xhr.onload = function(e) {
 	autocomp("Instr", 'Instr');
 	autocomp("days", 'days');
 	autocomp("start", 'start');
+	autocomp("end", 'end');
 	autocomp("Subj", 'Subj');
 };
 xhr.send();
@@ -38,7 +39,13 @@ document.getElementById("search").addEventListener('submit', function (e) {
 			if (terms > 0) {
 				searchql += " AND "
 			}
-			searchql += inps[i].id+" LIKE '%"+inps[i].value+"%'";
+			if (inps[i].id == 'start') {
+				searchql += inps[i].id +' >= '+inps[i].value;
+			} else if (inps[i].id == 'end') {
+				searchql += inps[i].id +' <= '+inps[i].value;
+			} else {
+				searchql += inps[i].id+" LIKE '%"+inps[i].value+"%'";
+			}
 			terms++;
 		}
 	}
