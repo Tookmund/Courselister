@@ -7,3 +7,4 @@ Cypher V
  - SQLite
  - sql.js
  - Vue.js
+ - awesomplete
