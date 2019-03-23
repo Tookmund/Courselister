@@ -12,22 +12,23 @@ function getvals(v) {
 	return arr;
 }
 
-var xhr = new XMLHttpRequest();
-xhr.open('GET', '202010.db', true);
-xhr.responseType = 'arraybuffer';
-xhr.onload = function(e) {
-	var uInt8Array = new Uint8Array(this.response);
-	db = new SQL.Database(uInt8Array);
-	var s = document.getElementById("search");
-	var inps = s.getElementsByTagName("input");
-	for (i in inps) {
-		if (inps[i].type == 'text') {
-			autocomp(inps[i].id);
+function getdb(name) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', name+'.db', true);
+	xhr.responseType = 'arraybuffer';
+	xhr.onload = function(e) {
+		var uInt8Array = new Uint8Array(this.response);
+		db = new SQL.Database(uInt8Array);
+		var s = document.getElementById("search");
+		var inps = s.getElementsByTagName("input");
+		for (i in inps) {
+			if (inps[i].type == 'text') {
+				autocomp(inps[i].id);
+			}
 		}
-	}
-};
-xhr.send();
-console.log('begin');
+	};
+	xhr.send();
+}
 
 document.getElementById("search").addEventListener('submit', function (e) {
 	e.preventDefault();
