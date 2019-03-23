@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-
 import sys
+import os
 import re
 import bs4
 import requests
@@ -106,13 +106,14 @@ for term in terms:
     #     t = finalp.find(id='class').find_next('table')
     #     for r in t.find_all('tr'):
 
+    os.rename(term+'.db', term+'.db.bak')
     db = sqlite3.connect(term+'.db')
     c = db.cursor()
     # CRN int
     # coll 0 = none, 100, 150, 200, 30D, 30G, 30C etc.
     # TODO Multiple COLL attributes
     c.execute('''
-            CREATE TABLE IF NOT EXISTS courses
+            CREATE TABLE courses
             (
             CRN int,
             Subj text,
