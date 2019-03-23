@@ -1,10 +1,12 @@
 function autocomp(sql, inpid) {
+	console.log(sql);
   var inp = document.getElementById(inpid);
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
   var currentFocus;
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
+	  console.log(inpid+" "+e);
       var a, b, i, val = this.value;
       /*close any already open lists of autocompleted values*/
       closeAllLists();
@@ -17,8 +19,10 @@ function autocomp(sql, inpid) {
       /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
 	  var wild = "%"+val+"%";
-	  var search = db.exec(sql, wild);
+	  var search = db.exec("SELECT ? FROM courses WHERE ? LIKE ?", [sql, sql, wild]);
+	  console.log(search);
 	  var arr = getvals(search);
+	  console.log(arr);
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
           /*create a DIV element for each matching element:*/

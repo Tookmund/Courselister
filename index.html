@@ -7,10 +7,11 @@
 		<link rel="stylesheet" href="style.css">
 		<script src="https://unpkg.com/vue" defer></script>
 		<script src="sql.js"></script>
+		<script src="autocomplete.js"></script>
 		<script src="script.js" defer></script>
 	</head>
 	<body>
-		<form onsubmit="search()">
+		<form autocomplete='off' onsubmit="search()">
 			<label>Title</label>
 			<input id='title' />
 			<label>Instructor</label>
