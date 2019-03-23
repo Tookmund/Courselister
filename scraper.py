@@ -44,11 +44,11 @@ c.execute('''
         Attr text,
         COLL text,
         Title text,
-        InstF text,
-        InstL text,
+        Instr text,
         credits int,
         days text,
-        time text,
+        start int,
+        end int,
         enrolled int,
         seats int,
         status int
@@ -78,15 +78,16 @@ def parserow(row, c):
     print(course[4])
     fl = row[4].string.split(',')
     if len(fl) == 1:
-        course[6] = fl[0].strip()
+        course[5] = fl[0].strip()
     else:
-        course[5] = fl[1].strip()
-        course[6] = fl[0].strip()
-    course[7] = row[5].string
+        course[5] = fl[1].strip()+" "+fl[0].strip()
+    course[6] = row[5].string
     dt = row[6].string.split(":")
     if len(dt) == 2:
-        course[8] = dt[0]
-        course[9] = dt[1]
+        course[7] = dt[0]
+        se = dt[1].split('-')
+        course[8] = se[0]
+        course[9] = se[1]
     # row[7] is projected
     course[10] = row[8].string
     course[11] = row[9].string
