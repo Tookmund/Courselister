@@ -29,10 +29,19 @@ console.log('begin');
 
 document.getElementsByTagName("form")[0].addEventListener('submit', function (e) {
 	e.preventDefault();
-	console.log("SEARCH");
-	var title = document.getElementById('Title').value;
-	title = '%'+title+'%';
-	console.log(title);
-	var r = db.exec("SELECT * FROM courses WHERE Title LIKE ?", title);
-	console.log(r);
+	var searchql = "SELECT * FROM courses WHERE "
+	var search = document.getElementById('search');
+	var inps = search.getElementsByTagName('input');
+	var terms = 0;
+	for (i in inps) {
+		console.log(inps[i].id+": "+inps[i].value);
+		if (inps[i].id != undefined && inps[i].value != '') {
+			if (terms > 0) {
+				searchql += " AND "
+			}
+			searchql += inps[i].id+" LIKE %"+inps[i].value+"%";
+			terms++;
+		}
+	}
+	console.log(searchql);
 }, false);
