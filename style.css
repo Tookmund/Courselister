@@ -53,6 +53,9 @@ body {
 	color: var(--dark-gray);
 }
 
+#submit {
+	margin-top: 10px;
+}
 table {
   border-collapse: collapse;
 }
