@@ -1,0 +1,69 @@
+h1 {
+	align:center;
+}
+
+input[type="text"] {
+	padding: 5px;
+	border: solid 1px var(--gray);
+	border-radius: 5px;
+}
+.autocomplete input {
+	width: 100%;
+	line-height: 33%;
+}
+
+input[type="submit"] {
+	border: none;
+	box-shadow: 1px 1px var(--gray);
+	color: var(--dark-gray);
+	border-radius: 5px;
+	background-color: var(--light-gray);
+	padding: 10px;
+	font-size: 0.8em;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif');
+
+:root {
+	--sans-fonts: "Noto Sans", sans-serif;
+	--serif-fonts: "Noto Serif", serif;
+	
+	--lightest-gray: #fcfcfc;
+	--light-gray: #eee;
+	--gray: #666;
+	--dark-gray: #333;
+	
+	--light-accent: #d6edff;
+	--dark-accent: #1c6396;
+	
+	--light-correct: #b7f7d1;
+	--dark-correct: #0f8e43;
+	
+	--light-wrong: #f9cac5;
+	--dark-wrong: #9b2417;
+}
+
+body {
+	margin-left: 10%;
+	margin-right: 10%;
+	font-family: var(--serif-fonts);
+	background-color: var(--lightest-gray);
+	color: var(--dark-gray);
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table {
+  border: 3px solid var(--dark-gray);
+  margin: 10px;
+}
+th, td {
+	padding: 5px;
+}
+td {
+	text-align: right;
+}
