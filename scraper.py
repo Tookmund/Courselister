@@ -61,11 +61,9 @@ ATTRS = ['CSI', 'NQR', 'ALV']
 
 coll = re.compile(r'C\d{2}.')
 def parserow(row, c):
-    print(len(row))
-    course = [None for i in range(12)]
+    course = [None for i in range(13)]
     course[0] = row[0].a.string
-    course[1] = row[1].string
-    print(row[2].string)
+    course[1] = row[1].stripped_string
     attr = row[2].string.split(',')
     if not isinstance(attr, list):
         attr = [attr]
@@ -77,23 +75,28 @@ def parserow(row, c):
             course[3] = item[1:]
 
     course[4] = row[4].string
-    fl = row[5].string.split(',')
+    fl = row[4].string.split(',')
+    print(fl[0], fl[1])
     course[5] = fl[1]
     course[6] = fl[0]
-    course[7] = row[6].string
-    dt = row[7].string.split(":")
+    course[7] = row[5].string
+    dt = row[6].string.split(":")
     course[8] = dt[0]
     course[9] = dt[1]
-    # row[8] is projected
-    course[10] = row[9].string
-    course[11] = row[10].string
-    if row[11].string == "OPEN":
+    # row[7] is projected
+    course[10] = row[8].string
+    course[11] = row[9].string
+    if row[10].string == "OPEN":
         course[12] = True
     else:
         course[12] = False
-
-    v = "{}, " *11+"{}"
-    c.execute("INSERT INTO courses VALUES ("+v+")".format(*row))
+    v = "{},"*len(course)
+    v = v[:-1]
+    sql = "INSERT INTO courses VALUES ("+v+")"
+    print(sql)
+    sql = sql.format(*course)
+    print(sql)
+    c.execute(sql)
     c.commit()
 
 for subj in subjs[:1]:
