@@ -27,14 +27,13 @@ xhr.onload = function(e) {
 xhr.send();
 console.log('begin');
 
-document.getElementsByTagName("form")[0].addEventListener('submit', function (e) {
+document.getElementById("search").addEventListener('submit', function (e) {
 	e.preventDefault();
 	var searchql = "SELECT * FROM courses WHERE "
 	var search = document.getElementById('search');
 	var inps = search.getElementsByTagName('input');
 	var terms = 0;
 	for (i in inps) {
-		console.log(inps[i].id+": "+inps[i].value);
 		if (inps[i].id != undefined && inps[i].value != '') {
 			if (terms > 0) {
 				searchql += " AND "
@@ -45,5 +44,22 @@ document.getElementsByTagName("form")[0].addEventListener('submit', function (e)
 	}
 	console.log(searchql);
 	var r = db.exec(searchql);
+	var d = r[0];
 	console.log(r);
+	var results = document.getElementById('results');
+	results.innerHTML = '';
+	var fin = '<table><tr>';
+	for (c in d.columns) {
+		fin += '<th>'+d.columns[c]+'</th>';
+	}
+	fin += '</tr>';
+	for (c in d.values) {
+		fin += '<tr>';
+		for (row in d.values[c]) {
+			fin += '<td>'+d.values[c][row]+'</td>';
+		}
+		fin += '</tr>';
+	}
+	fin += '</table>';
+	results.innerHTML = fin;
 }, false);
