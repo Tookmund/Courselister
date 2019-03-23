@@ -74,11 +74,10 @@ def parserow(row, c):
         if match:
             course[3] = item[1:]
 
-    course[4] = row[4].string
+    course[4] = "'"+row[3].string+"'"
     fl = row[4].string.split(',')
-    print(fl[0], fl[1])
-    course[5] = fl[1]
-    course[6] = fl[0]
+    course[5] = "'"+fl[1].strip()+"'"
+    course[6] = "'"+fl[0].strip()+"'"
     course[7] = row[5].string
     dt = row[6].string.split(":")
     course[8] = dt[0]
