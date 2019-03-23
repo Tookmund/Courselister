@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import os
+import sys
 import re
 import bs4
 import requests
@@ -9,7 +9,7 @@ import sqlite3
 cs = requests.get("https://courselist.wm.edu/courselist/")
 if cs.status_code != 200:
     print("Course List", cs.status_code)
-    os.exit(1)
+    sys.exit(1)
 
 csp = bs4.BeautifulSoup(cs.text, 'lxml')
 
@@ -26,11 +26,18 @@ def selectvalues(select):
 terms = selectvalues(csp.find(id='term_code'))
 subjs = selectvalues(csp.find(id='term_subj'))
 
-def parsetable(c, table):
-    pass
 
 #for term in terms[:1]:
 term = terms[2]
+# finals = {}
+# finals[term] = None
+# finalreq = requests.get("https://www.wm.edu/offices/registrar/calendarsandexams/examschedules/fall19exam/index.php")
+# if finalreq.status_code == 200:
+#     finals[term] = {}
+#     finalp = bs4.BeautifulSoup(finalreq.text, 'lxml')
+#     t = finalp.find(id='class').find_next('table')
+#     for r in t.find_all('tr'):
+
 db = sqlite3.connect(term+'.db')
 c = db.cursor()
 # CRN int
@@ -109,7 +116,7 @@ for subj in subjs:
     r = requests.get("https://courselist.wm.edu/courselist/courseinfo/searchresults?term_code="+term+"&term_subj="+subj+"&attr=0&attr2=0&levl=0&status=0&ptrm=0&search=Search")
     if r.status_code != 200:
         print(term_code, subj, r.status_code)
-        os.exit(2)
+        sys.exit(2)
     parse = bs4.BeautifulSoup(r.text, 'lxml')
     t = parse.find('table')
     rowsize = 11
