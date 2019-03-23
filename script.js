@@ -39,9 +39,11 @@ document.getElementsByTagName("form")[0].addEventListener('submit', function (e)
 			if (terms > 0) {
 				searchql += " AND "
 			}
-			searchql += inps[i].id+" LIKE %"+inps[i].value+"%";
+			searchql += inps[i].id+" LIKE '%"+inps[i].value+"%'";
 			terms++;
 		}
 	}
 	console.log(searchql);
+	var r = db.exec(searchql);
+	console.log(r);
 }, false);
