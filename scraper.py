@@ -28,14 +28,23 @@ def selectvalues(select):
 tc = csp.find(id='term_code')
 termdict = {}
 termdict['updated'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+terms = []
 for opt in tc.children:
     if isinstance(opt, bs4.element.Tag):
         termdict[opt['value']] = opt.string.strip()
+        terms.append(opt['value'])
 with open("terms.json", 'w') as f:
     json.dump(termdict, f)
 
-terms = selectvalues(tc)
-subjs = selectvalues(csp.find(id='term_subj'))
+subjs = []
+subjc = csp.find(id='term_subj')
+subjdict = {}
+for opt in subjc.children:
+    if isinstance(opt, bs4.element.Tag):
+        v = opt['value']
+        if v != '0':
+            subjdict[opt['value']] = opt.string.strip()
+            subjs.append(opt['value'])
 
 ATTRS = ['CSI', 'NQR', 'ALV']
 
@@ -45,7 +54,7 @@ def parserow(row, c):
     course = ["" for i in range(14)]
     course[0] = row[0].a.string
     ident = row[1].string.strip().split(" ")
-    course[1] = ident[0]
+    course[1] = subjdict[ident[0]]
     course[2] = ' '.join(ident[1:])
     attr = row[2].string.split(',')
     if not isinstance(attr, list):
