@@ -1,12 +1,10 @@
 function autocomp(sql, inpid) {
-	console.log(sql);
   var inp = document.getElementById(inpid);
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
   var currentFocus;
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
-	  console.log(inpid+" "+e);
       var a, b, i, val = this.value;
       /*close any already open lists of autocompleted values*/
       closeAllLists();
@@ -20,11 +18,10 @@ function autocomp(sql, inpid) {
       this.parentNode.appendChild(a);
 	  var wild = "%"+val+"%";
 	  var acompsql = db.prepare("SELECT DISTINCT "+sql+" FROM courses WHERE "+sql+" LIKE ? LIMIT 10");
-	  console.log(acompsql.bind([wild]));
+	  acompsql.bind([wild]);
       /*for each item in the array...*/
 	  while(acompsql.step()) {
 		  var possible = acompsql.get();
-		  console.log(possible[0]);
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           /*make the matching letters bold:*/
@@ -43,7 +40,6 @@ function autocomp(sql, inpid) {
           });
           a.appendChild(b);
       }
-	  console.log('reset');
 	  acompsql.reset();
   });
   /*execute a function presses a key on the keyboard:*/
@@ -101,4 +97,4 @@ function autocomp(sql, inpid) {
 document.addEventListener("click", function (e) {
     closeAllLists(e.target);
 });
-} 
+}
