@@ -108,9 +108,14 @@ document.getElementById("search").addEventListener('submit', function (e) {
 		searchql += oc.id+" LIKE "+oc.value;
 	}
 	console.log(searchql);
-	var r = db.exec(searchql);
-	var d = r[0];
 	var results = document.getElementById('results');
+	var r = db.exec(searchql);
+	if (r.length == 0) {
+		results.innerHTML = "NO RESULTS";
+		results.scrollIntoView();
+		return;
+	}
+	var d = r[0];
 	results.innerHTML = '';
 	var fin = '<table><tr>';
 	for (c in d.columns) {
@@ -126,4 +131,5 @@ document.getElementById("search").addEventListener('submit', function (e) {
 	}
 	fin += '</table>';
 	results.innerHTML = fin;
+	results.scrollIntoView();
 }, false);
