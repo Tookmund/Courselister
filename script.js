@@ -42,6 +42,13 @@ document.getElementById("search").addEventListener('submit', function (e) {
 			terms++;
 		}
 	}
+	var oc = document.getElementById('status');
+	if (oc.value != '') {
+		if (terms > 0) {
+				searchql += " AND "
+		}
+		searchql += oc.id+" LIKE "+oc.value;
+	}
 	console.log(searchql);
 	var r = db.exec(searchql);
 	var d = r[0];
