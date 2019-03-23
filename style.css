@@ -56,7 +56,7 @@ body {
 	color: var(--wm-gold);
 }
 
-#submit {
+.submit {
 	margin-top: 10px;
 }
 table {

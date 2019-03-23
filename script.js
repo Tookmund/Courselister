@@ -26,9 +26,31 @@ function getdb(name) {
 				autocomp(inps[i].id);
 			}
 		}
+		console.log(name);
 	};
 	xhr.send();
 }
+
+
+var termreq = new XMLHttpRequest();
+var terms = document.getElementById('term');
+termreq.open('GET', 'terms.json', true);
+termreq.responseType = 'json';
+termreq.onload = function(e) {
+	var hstr = '<select>';
+	for (const [name, value] of Object.entries(this.response)) {
+		hstr += '<option value='+value+'>'+name+'</option>';
+	}
+	hstr += "</select><div class='submit'><input type='submit' value='Load Term' /></div>";
+	terms.innerHTML = hstr;
+};
+termreq.send();
+
+terms.addEventListener('submit', function (e) {
+	e.preventDefault();
+	var v = terms.getElementsByTagName('select')[0];
+	getdb(v.value);
+});
 
 document.getElementById("search").addEventListener('submit', function (e) {
 	e.preventDefault();
@@ -40,7 +62,7 @@ document.getElementById("search").addEventListener('submit', function (e) {
 		if (inps[i].type == 'checkbox') {
 			continue;
 		}
-		if (inps[i].id != undefined && inps[i].value != '') {
+		if (inps[i].type == 'text' && inps[i].value != '') {
 			if (terms > 0) {
 				searchql += " AND "
 			}
