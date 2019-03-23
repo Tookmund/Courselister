@@ -40,6 +40,7 @@ c.execute('''
         CREATE TABLE IF NOT EXISTS courses
         (
         CRN int,
+        Subj text,
         ID  text,
         Attr text,
         COLL text,
@@ -61,40 +62,42 @@ ATTRS = ['CSI', 'NQR', 'ALV']
 
 coll = re.compile(r'C\d{2}.')
 def parserow(row, c):
-    course = ["" for i in range(13)]
+    course = ["" for i in range(14)]
     course[0] = row[0].a.string
-    course[1] = row[1].string.strip()
+    ident = row[1].string.strip().split(" ")
+    course[1] = ident[0]
+    course[2] = ' '.join(ident[1:])
     attr = row[2].string.split(',')
     if not isinstance(attr, list):
         attr = [attr]
     for item in attr:
         if item in ATTRS:
-            course[2] = item
+            course[3] = item
         match = coll.search(item)
         if match:
-            course[3] = item[1:]
+            course[4] = item[1:]
 
-    course[4] = row[3].string.strip()
-    print(course[4])
+    course[5] = row[3].string.strip()
+    print(course[5])
     fl = row[4].string.split(',')
     if len(fl) == 1:
-        course[5] = fl[0].strip()
+        course[6] = fl[0].strip()
     else:
-        course[5] = fl[1].strip()+" "+fl[0].strip()
-    course[6] = row[5].string
+        course[6] = fl[1].strip()+" "+fl[0].strip()
+    course[7] = row[5].string
     dt = row[6].string.split(":")
     if len(dt) == 2:
-        course[7] = dt[0]
+        course[8] = dt[0]
         se = dt[1].split('-')
-        course[8] = se[0]
-        course[9] = se[1]
+        course[9] = se[0]
+        course[10] = se[1]
     # row[7] is projected
-    course[10] = row[8].string
-    course[11] = row[9].string
-    if course[11].endswith('*'):
-        course[11] = course[11][:-1]
+    course[11] = row[8].string
+    course[12] = row[9].string
+    if course[12].endswith('*'):
+        course[12] = course[11][:-1]
     if row[10].string == "OPEN":
-        course[12] = 1
+        course[13] = 1
     else:
         course[12] = 0
     v = " ?,"*len(course)
