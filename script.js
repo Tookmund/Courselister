@@ -2,10 +2,12 @@ var db = null;
 
 function getvals(v) {
 	arr = [];
+	if (!v || v.length == 0) {
+		return arr;
+	}
 	for (let a of v[0].values) {
 		arr.push(a[0]);
 	}
-	//console.log(arr);
 	return arr;
 }
 
@@ -15,10 +17,10 @@ xhr.responseType = 'arraybuffer';
 xhr.onload = function(e) {
 	var uInt8Array = new Uint8Array(this.response);
 	db = new SQL.Database(uInt8Array);
-	var titles = db.exec("SELECT DISTINCT Title FROM courses");
-	autocomp("SELECT DISTINCT InstL FROM courses", 'instr');
-	autocomp("SELECT DISTINCT days FROM courses", 'day');
-	autocomp("SELECT DISTINCT time FROM courses", 'time');
+	autocomp("Title", 'title');
+	autocomp("InstL", 'instr');
+	autocomp("days", 'day');
+	autocomp("time", 'time');
 };
 xhr.send();
 console.log('begin');
