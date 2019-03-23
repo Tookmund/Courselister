@@ -27,11 +27,12 @@ xhr.onload = function(e) {
 xhr.send();
 console.log('begin');
 
-function coursesearch() {
+document.getElementsByTagName("form")[0].addEventListener('submit', function (e) {
+	e.preventDefault();
 	console.log("SEARCH");
-	var title = document.getElementById('title').value;
+	var title = document.getElementById('Title').value;
 	title = '%'+title+'%';
 	console.log(title);
 	var r = db.exec("SELECT * FROM courses WHERE Title LIKE ?", title);
 	console.log(r);
-}
+}, false);
