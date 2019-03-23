@@ -31,11 +31,14 @@ console.log('begin');
 
 document.getElementById("search").addEventListener('submit', function (e) {
 	e.preventDefault();
-	var searchql = "SELECT * FROM courses WHERE "
+	var searchql = "SELECT * FROM courses WHERE ";
 	var search = document.getElementById('search');
 	var inps = search.getElementsByTagName('input');
 	var terms = 0;
 	for (i in inps) {
+		if (inps[i].type == 'checkbox') {
+			continue;
+		}
 		if (inps[i].id != undefined && inps[i].value != '') {
 			if (terms > 0) {
 				searchql += " AND "
@@ -49,6 +52,22 @@ document.getElementById("search").addEventListener('submit', function (e) {
 			}
 			terms++;
 		}
+	}
+	var days = document.getElementById('days').getElementsByTagName('input');
+	dstr = "";
+	for (d in days) {
+		if (days[d].type == 'checkbox') {
+			if (days[d].checked) {
+				dstr += '%'+days[d].value;
+			}
+		}
+	}
+	if (dstr != "") {
+		if (terms > 0) {
+			searchql += " AND ";
+		}
+		searchql += "days LIKE '"+dstr+"%'";
+		terms++;
 	}
 	var oc = document.getElementById('status');
 	if (oc.value != '') {
