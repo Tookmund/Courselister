@@ -9,13 +9,6 @@ function getvals(v) {
 	return arr;
 }
 
-function autocomp(sql, id) {
-	var query = db.exec(sql);
-	return new Awesomplete(document.getElementById(id), {
-		list: getvals(query)
-	});
-}
-
 var xhr = new XMLHttpRequest();
 xhr.open('GET', '202010.db', true);
 xhr.responseType = 'arraybuffer';
@@ -23,9 +16,6 @@ xhr.onload = function(e) {
 	var uInt8Array = new Uint8Array(this.response);
 	db = new SQL.Database(uInt8Array);
 	var titles = db.exec("SELECT DISTINCT Title FROM courses");
-	new Awesomplete(document.getElementById('title'), {
-		list: getvals(titles)
-	});
 	autocomp("SELECT DISTINCT InstL FROM courses", 'instr');
 	autocomp("SELECT DISTINCT days FROM courses", 'day');
 	autocomp("SELECT DISTINCT time FROM courses", 'time');

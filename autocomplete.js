@@ -1,4 +1,5 @@
-function autocomplete(inp, arr) {
+function autocomp(sql, inpid) {
+  var inp = document.getElementById(inpid);
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
   var currentFocus;
@@ -15,10 +16,11 @@ function autocomplete(inp, arr) {
       a.setAttribute("class", "autocomplete-items");
       /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
+	  var wild = "%"+val+"%";
+	  var search = db.exec(sql, wild);
+	  var arr = getvals(search);
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           /*make the matching letters bold:*/
@@ -35,7 +37,6 @@ function autocomplete(inp, arr) {
               closeAllLists();
           });
           a.appendChild(b);
-        }
       }
   });
   /*execute a function presses a key on the keyboard:*/
