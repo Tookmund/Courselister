@@ -5,6 +5,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=1">
 		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="autocomplete.css">
 		<script src="https://unpkg.com/vue" defer></script>
 		<script src="sql.js"></script>
 		<script src="autocomplete.js"></script>
@@ -13,16 +14,23 @@
 	<body>
 		<form autocomplete='off' onsubmit="searchcourses()">
 			<div class='autocomplete'>
-			<label>Title</label>
-			<input id='title' />
-			<label>Instructor</label>
-			<input id='instr' />
-			<label>Days</label>
-			<input id='day' />
-			<label>Times</label>
-			<input id='time' />
-			<input type='submit' />
+				<label>Title</label>
+				<input id='title' />
 			</div>
+			<div class='autocomplete'>
+				<label>Instructor</label>
+				<input id='instr' />
+			</div>
+			<div class='autocomplete'>
+				<label>Days</label>
+				<input id='day' />
+			</div>
+			<div class='autocomplete'>
+			<div class='autocomplete'>
+				<label>Times</label>
+				<input id='time' />
+			</div>
+			<input type='submit' />
 		</form>
 	</body>
 </html>
