@@ -7,7 +7,7 @@ input[type="text"] {
 	border: solid 1px var(--gray);
 	border-radius: 5px;
 }
-.autocomplete input {
+.autocomplete input[type="text"] {
 	width: 100%;
 	line-height: 33%;
 }
@@ -69,4 +69,9 @@ th, td {
 }
 td {
 	text-align: right;
+}
+input[type=checkbox], input[type=radio] {
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
 }
