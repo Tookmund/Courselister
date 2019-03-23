@@ -18,10 +18,11 @@ xhr.responseType = 'arraybuffer';
 xhr.onload = function(e) {
 	var uInt8Array = new Uint8Array(this.response);
 	db = new SQL.Database(uInt8Array);
-	autocomp("Title", 'title');
-	autocomp("InstL", 'instr');
-	autocomp("days", 'day');
-	autocomp("time", 'time');
+	autocomp("Title", 'Title');
+	autocomp("Instr", 'Instr');
+	autocomp("days", 'days');
+	autocomp("start", 'start');
+	autocomp("Subj", 'Subj');
 };
 xhr.send();
 console.log('begin');
