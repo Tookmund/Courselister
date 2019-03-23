@@ -19,7 +19,7 @@ function autocomp(sql, inpid) {
       /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
 	  var wild = "%"+val+"%";
-	  var acompsql = db.prepare("SELECT DISTINCT "+sql+" FROM courses WHERE "+sql+" LIKE ? LIMIT 20");
+	  var acompsql = db.prepare("SELECT DISTINCT "+sql+" FROM courses WHERE "+sql+" LIKE ? LIMIT 10");
 	  console.log(acompsql.bind([wild]));
       /*for each item in the array...*/
 	  while(acompsql.step()) {
@@ -32,7 +32,7 @@ function autocomp(sql, inpid) {
           //b.innerHTML += possible.substr(val.length);
           /*insert a input field that will hold the current array item's value:*/
 		  b.innerHTML = possible[0];
-          b.innerHTML += "<input type='hidden' value='" + possible + "'>";
+          b.innerHTML += "<input type='hidden' value='" + possible[0] + "'>";
           /*execute a function when someone clicks on the item value (DIV element):*/
               b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
