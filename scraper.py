@@ -26,44 +26,6 @@ def selectvalues(select):
 terms = selectvalues(csp.find(id='term_code'))
 subjs = selectvalues(csp.find(id='term_subj'))
 
-
-#for term in terms[:1]:
-term = terms[2]
-# finals = {}
-# finals[term] = None
-# finalreq = requests.get("https://www.wm.edu/offices/registrar/calendarsandexams/examschedules/fall19exam/index.php")
-# if finalreq.status_code == 200:
-#     finals[term] = {}
-#     finalp = bs4.BeautifulSoup(finalreq.text, 'lxml')
-#     t = finalp.find(id='class').find_next('table')
-#     for r in t.find_all('tr'):
-
-db = sqlite3.connect(term+'.db')
-c = db.cursor()
-# CRN int
-# coll 0 = none, 100, 150, 200, 30D, 30G, 30C etc.
-# TODO Multiple COLL attributes
-c.execute('''
-        CREATE TABLE IF NOT EXISTS courses
-        (
-        CRN int,
-        Subj text,
-        ID  text,
-        Attr text,
-        COLL text,
-        Title text,
-        Instr text,
-        credits int,
-        days text,
-        start int,
-        end int,
-        enrolled int,
-        seats int,
-        status int
-        )
-        ''')
-
-
 ATTRS = ['CSI', 'NQR', 'ALV']
 
 
@@ -112,23 +74,60 @@ def parserow(row, c):
     sql = "INSERT INTO courses VALUES ("+v+")"
     c.execute(sql, course)
 
-for subj in subjs:
-    r = requests.get("https://courselist.wm.edu/courselist/courseinfo/searchresults?term_code="+term+"&term_subj="+subj+"&attr=0&attr2=0&levl=0&status=0&ptrm=0&search=Search")
-    if r.status_code != 200:
-        print(term_code, subj, r.status_code)
-        sys.exit(2)
-    parse = bs4.BeautifulSoup(r.text, 'lxml')
-    t = parse.find('table')
-    rowsize = 11
-    row = []
-    i = 0
-    for data in t.find_all('td'):
-        if i == rowsize:
-            parserow(row, c)
-            row = []
-            i = 0
-            pass
-        row.append(data)
-        i += 1
-db.commit()
-db.close()
+
+for term in terms:
+    # term = terms[2]
+    # finals = {}
+    # finals[term] = None
+    # finalreq = requests.get("https://www.wm.edu/offices/registrar/calendarsandexams/examschedules/fall19exam/index.php")
+    # if finalreq.status_code == 200:
+    #     finals[term] = {}
+    #     finalp = bs4.BeautifulSoup(finalreq.text, 'lxml')
+    #     t = finalp.find(id='class').find_next('table')
+    #     for r in t.find_all('tr'):
+
+    db = sqlite3.connect(term+'.db')
+    c = db.cursor()
+    # CRN int
+    # coll 0 = none, 100, 150, 200, 30D, 30G, 30C etc.
+    # TODO Multiple COLL attributes
+    c.execute('''
+            CREATE TABLE IF NOT EXISTS courses
+            (
+            CRN int,
+            Subj text,
+            ID  text,
+            Attr text,
+            COLL text,
+            Title text,
+            Instr text,
+            credits int,
+            days text,
+            start int,
+            end int,
+            enrolled int,
+            seats int,
+            status int
+            )
+            ''')
+
+    for subj in subjs:
+        r = requests.get("https://courselist.wm.edu/courselist/courseinfo/searchresults?term_code="+term+"&term_subj="+subj+"&attr=0&attr2=0&levl=0&status=0&ptrm=0&search=Search")
+        if r.status_code != 200:
+            print(term_code, subj, r.status_code)
+            sys.exit(2)
+        parse = bs4.BeautifulSoup(r.text, 'lxml')
+        t = parse.find('table')
+        rowsize = 11
+        row = []
+        i = 0
+        for data in t.find_all('td'):
+            if i == rowsize:
+                parserow(row, c)
+                row = []
+                i = 0
+                pass
+            row.append(data)
+            i += 1
+    db.commit()
+    db.close()
