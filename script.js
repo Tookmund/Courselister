@@ -107,6 +107,9 @@ document.getElementById("search").addEventListener('submit', function (e) {
 		}
 		searchql += oc.id+" LIKE "+oc.value;
 	}
+	if (terms == 0) {
+		searchql = searchql.slice(0, -7);
+	}
 	console.log(searchql);
 	var results = document.getElementById('results');
 	var r = db.exec(searchql);
