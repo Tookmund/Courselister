@@ -1,6 +1,8 @@
 function autocomp(sql) {
   inpid = sql;
-  var inp = document.getElementById(inpid);
+  var oinp = document.getElementById(inpid);
+  var inp = oinp.cloneNode(true);
+  oinp.parentNode.replaceChild(inp, oinp);
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
   var currentFocus;
