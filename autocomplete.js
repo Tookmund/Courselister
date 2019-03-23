@@ -19,19 +19,20 @@ function autocomp(sql, inpid) {
       /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
 	  var wild = "%"+val+"%";
-	  var search = db.exec("SELECT ? FROM courses WHERE ? LIKE ?", [sql, sql, wild]);
-	  console.log(search);
-	  var arr = getvals(search);
-	  console.log(arr);
+	  var acompsql = db.prepare("SELECT DISTINCT "+sql+" FROM courses WHERE "+sql+" LIKE ? LIMIT 20");
+	  console.log(acompsql.bind([wild]));
       /*for each item in the array...*/
-      for (i = 0; i < arr.length; i++) {
+	  while(acompsql.step()) {
+		  var possible = acompsql.get();
+		  console.log(possible[0]);
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i].substr(val.length);
+          //b.innerHTML = "<strong>" + possible.substr(0, val.length) + "</strong>";
+          //b.innerHTML += possible.substr(val.length);
           /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+		  b.innerHTML = possible[0];
+          b.innerHTML += "<input type='hidden' value='" + possible + "'>";
           /*execute a function when someone clicks on the item value (DIV element):*/
               b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
@@ -42,6 +43,8 @@ function autocomp(sql, inpid) {
           });
           a.appendChild(b);
       }
+	  console.log('reset');
+	  acompsql.reset();
   });
   /*execute a function presses a key on the keyboard:*/
   inp.addEventListener("keydown", function(e) {

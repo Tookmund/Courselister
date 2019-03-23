@@ -1,4 +1,5 @@
 var db = null;
+var acompsql = null;
 
 function getvals(v) {
 	arr = [];
@@ -25,7 +26,7 @@ xhr.onload = function(e) {
 xhr.send();
 console.log('begin');
 
-function search() {
+function coursesearch() {
 	console.log("SEARCH");
 	var title = document.getElementById('title').value;
 	title = '%'+title+'%';
