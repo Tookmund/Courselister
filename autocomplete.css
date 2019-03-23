@@ -6,11 +6,6 @@
   margin: 10px;
 }
 
-input[type=submit] {
-  background-color: DodgerBlue;
-  color: #fff;
-}
-
 .autocomplete-items {
   position: absolute;
   border: 1px solid #d4d4d4;
