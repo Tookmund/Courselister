@@ -5,6 +5,7 @@ import re
 import bs4
 import requests
 import sqlite3
+import json
 
 cs = requests.get("https://courselist.wm.edu/courselist/")
 if cs.status_code != 200:
@@ -23,7 +24,15 @@ def selectvalues(select):
                 vals.append(opt['value'])
     return vals
 
-terms = selectvalues(csp.find(id='term_code'))
+tc = csp.find(id='term_code')
+termdict = {}
+for opt in tc.children:
+    if isinstance(opt, bs4.element.Tag):
+        termdict[opt.string.strip()] = opt['value']
+with open("terms.json", 'w') as f:
+    json.dump(termdict, f)
+
+terms = selectvalues(tc)
 subjs = selectvalues(csp.find(id='term_subj'))
 
 ATTRS = ['CSI', 'NQR', 'ALV']
