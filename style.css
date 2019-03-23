@@ -69,6 +69,7 @@ table {
 }
 th, td {
 	padding: 5px;
+	border-bottom: 3px solid var(--wm-gold);
 }
 td {
 	text-align: right;
