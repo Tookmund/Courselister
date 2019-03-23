@@ -49,9 +49,9 @@ c.execute('''
         credits int,
         days text,
         time text,
-        enrolled int
+        enrolled int,
         seats int,
-        status bool
+        status int
         )
         ''')
 
@@ -61,9 +61,9 @@ ATTRS = ['CSI', 'NQR', 'ALV']
 
 coll = re.compile(r'C\d{2}.')
 def parserow(row, c):
-    course = [None for i in range(13)]
+    course = ["" for i in range(13)]
     course[0] = row[0].a.string
-    course[1] = row[1].stripped_string
+    course[1] = row[1].string.strip()
     attr = row[2].string.split(',')
     if not isinstance(attr, list):
         attr = [attr]
@@ -74,31 +74,34 @@ def parserow(row, c):
         if match:
             course[3] = item[1:]
 
-    course[4] = "'"+row[3].string+"'"
+    course[4] = row[3].string.strip()
+    print(course[4])
     fl = row[4].string.split(',')
-    course[5] = "'"+fl[1].strip()+"'"
-    course[6] = "'"+fl[0].strip()+"'"
+    if len(fl) == 1:
+        course[6] = fl[0].strip()
+    else:
+        course[5] = fl[1].strip()
+        course[6] = fl[0].strip()
     course[7] = row[5].string
     dt = row[6].string.split(":")
-    course[8] = dt[0]
-    course[9] = dt[1]
+    if len(dt) == 2:
+        course[8] = dt[0]
+        course[9] = dt[1]
     # row[7] is projected
     course[10] = row[8].string
     course[11] = row[9].string
+    if course[11].endswith('*'):
+        course[11] = course[11][:-1]
     if row[10].string == "OPEN":
-        course[12] = True
+        course[12] = 1
     else:
-        course[12] = False
-    v = "{},"*len(course)
+        course[12] = 0
+    v = " ?,"*len(course)
     v = v[:-1]
     sql = "INSERT INTO courses VALUES ("+v+")"
-    print(sql)
-    sql = sql.format(*course)
-    print(sql)
-    c.execute(sql)
-    c.commit()
+    c.execute(sql, course)
 
-for subj in subjs[:1]:
+for subj in subjs:
     r = requests.get("https://courselist.wm.edu/courselist/courseinfo/searchresults?term_code="+term+"&term_subj="+subj+"&attr=0&attr2=0&levl=0&status=0&ptrm=0&search=Search")
     if r.status_code != 200:
         print(term_code, subj, r.status_code)
@@ -116,3 +119,5 @@ for subj in subjs[:1]:
             pass
         row.append(data)
         i += 1
+db.commit()
+db.close()
