@@ -6,6 +6,7 @@ import bs4
 import requests
 import sqlite3
 import json
+from datetime import datetime
 
 cs = requests.get("https://courselist.wm.edu/courselist/")
 if cs.status_code != 200:
@@ -26,6 +27,7 @@ def selectvalues(select):
 
 tc = csp.find(id='term_code')
 termdict = {}
+termdict['updated'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 for opt in tc.children:
     if isinstance(opt, bs4.element.Tag):
         termdict[opt['value']] = opt.string.strip()

@@ -38,12 +38,15 @@ termreq.open('GET', 'terms.json', true);
 termreq.responseType = 'json';
 var termdict = null;
 termreq.onload = function(e) {
-	var hstr = '<select>';
 	termdict = this.response;
+	var hstr = "<p>Last Updated: "+termdict['updated']+"</p><select>";
 	for (const [value, name] of Object.entries(termdict)) {
-		hstr += '<option value='+value+'>'+name+'</option>';
+		if (value != 'updated') {
+			hstr += '<option value='+value+'>'+name+'</option>';
+		}
 	}
-	hstr += "</select><div class='submit'><input type='submit' value='Load Term' /></div>";
+	hstr += "</select>";
+	hstr += "<div class='submit'><input type='submit' value='Load Term' /></div>";
 	terms.innerHTML = hstr;
 };
 termreq.send();
