@@ -28,7 +28,7 @@ tc = csp.find(id='term_code')
 termdict = {}
 for opt in tc.children:
     if isinstance(opt, bs4.element.Tag):
-        termdict[opt.string.strip()] = opt['value']
+        termdict[opt['value']] = opt.string.strip()
 with open("terms.json", 'w') as f:
     json.dump(termdict, f)
 

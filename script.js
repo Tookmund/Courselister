@@ -36,9 +36,11 @@ var termreq = new XMLHttpRequest();
 var terms = document.getElementById('term');
 termreq.open('GET', 'terms.json', true);
 termreq.responseType = 'json';
+var termdict = null;
 termreq.onload = function(e) {
 	var hstr = '<select>';
-	for (const [name, value] of Object.entries(this.response)) {
+	termdict = this.response;
+	for (const [value, name] of Object.entries(termdict)) {
 		hstr += '<option value='+value+'>'+name+'</option>';
 	}
 	hstr += "</select><div class='submit'><input type='submit' value='Load Term' /></div>";
@@ -46,11 +48,14 @@ termreq.onload = function(e) {
 };
 termreq.send();
 
+
 terms.addEventListener('submit', function (e) {
 	e.preventDefault();
 	var v = terms.getElementsByTagName('select')[0];
 	getdb(v.value);
+	document.getElementById('termname').innerHTML = termdict[v.value];
 });
+
 
 document.getElementById("search").addEventListener('submit', function (e) {
 	e.preventDefault();
