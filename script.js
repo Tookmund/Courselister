@@ -33,7 +33,7 @@ function getdb(name) {
 
 
 var termreq = new XMLHttpRequest();
-var terms = document.getElementById('term');
+var termselem = document.getElementById('term');
 termreq.open('GET', 'terms.json', true);
 termreq.responseType = 'json';
 var termdict = null;
@@ -47,14 +47,14 @@ termreq.onload = function(e) {
 	}
 	hstr += "</select>";
 	hstr += "<div class='submit'><input type='submit' value='Load Term' /></div>";
-	terms.innerHTML = hstr;
+	termselem.innerHTML = hstr;
 };
 termreq.send();
 
 
-terms.addEventListener('submit', function (e) {
+termselem.addEventListener('submit', function (e) {
 	e.preventDefault();
-	var v = terms.getElementsByTagName('select')[0];
+	var v = termselem.getElementsByTagName('select')[0];
 	getdb(v.value);
 	document.getElementById('termname').innerHTML = termdict[v.value];
 });
@@ -127,8 +127,18 @@ document.getElementById("search").addEventListener('submit', function (e) {
 	fin += '</tr>';
 	for (c in d.values) {
 		fin += '<tr>';
+		var url = null;
 		for (row in d.values[c]) {
-			fin += '<td>'+d.values[c][row]+'</td>';
+			if (d.columns[row] == 'CRN') {
+				var fterm = termselem.getElementsByTagName('select')[0].value;
+				url = "https://courselist.wm.edu/courselist/courseinfo/addInfo?fterm="+fterm+"&fcrn="+d.values[c][row];
+			}
+			if (d.columns[row] == 'Title') {
+				fin += "<td><a href='"+url+"'>"+d.values[c][row]+"</a></td>";
+			}
+			else {
+				fin += '<td>'+d.values[c][row]+'</td>';
+			}
 		}
 		fin += '</tr>';
 	}
