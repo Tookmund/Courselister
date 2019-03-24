@@ -134,7 +134,7 @@ document.getElementById("search").addEventListener('submit', function (e) {
 				url = "https://courselist.wm.edu/courselist/courseinfo/addInfo?fterm="+fterm+"&fcrn="+d.values[c][row];
 			}
 			if (d.columns[row] == 'Title') {
-				fin += "<td><a href='"+url+"'>"+d.values[c][row]+"</a></td>";
+				fin += "<td><a href='"+url+"' target='_blank'>"+d.values[c][row]+"</a></td>";
 			}
 			else if (d.columns[row] == 'Status') {
 				fin += "<td>";
