@@ -48,55 +48,43 @@ for opt in subjc.children:
 
 coll = re.compile(r'C\d{2}.')
 def parserow(row, c):
-    course = ["" for i in range(18)]
+    course = ["" for i in range(17)]
     course[0] = row[0].a.string
     row[1] = row[1].string.strip()
     ident = row[1].split(" ")
     course[1] = subjdict[ident[0]]
     course[2] = row[1]
     attr = row[2].string.split(',')
-    if not isinstance(attr, list):
-        attr = [attr]
-    for item in attr:
-        match = coll.findall(item)
-        if len(match) > 0:
-            course[4] += match[0].strip()+' & '
-        else:
-            course[3] += item.strip()+' & '
-    if (course[3] != ''):
-            course[3] = course[3][:-3]
-    if (course[4] != ''):
-            course[4] = course[4][:-3]
-
-    course[5] = row[3].string.strip()
-    print(course[5])
+    course[3] = row[2].string
+    course[4] = row[3].string.strip()
+    print(course[4])
     names = row[4].string.split(';')
     for n in names:
         fl = n.split(',')
         if len(fl) == 1:
-            course[6] += fl[0].strip()
+            course[5] += fl[0].strip()
         else:
-            course[6] += fl[1].strip()+" "+fl[0].strip()
-        course[6] += ' & '
-    course[6] = course[6][:-3]
-    course[7] = row[5].string
+            course[5] += fl[1].strip()+" "+fl[0].strip()
+        course[5] += ' & '
+    course[5] = course[5][:-3]
+    course[6] = row[5].string
     dt = row[6].string.split(":")
     if len(dt) == 2:
-        course[8] = dt[0]
+        course[7] = dt[0]
         se = dt[1].split('-')
-        course[9] = se[0]
-        course[10] = se[1]
+        course[8] = se[0]
+        course[9] = se[1]
     # row[7] is projected
-    course[11] = row[8].string
-    course[12] = row[9].string
-    if course[12].endswith('*'):
-        course[12] = course[11][:-1]
+    course[10] = row[8].string
+    course[11] = row[9].string
+    if course[11].endswith('*'):
+        course[11] = course[11][:-1]
     if row[10].string == "OPEN":
-        course[13] = 1
+        course[12] = 1
     else:
-        course[13] = 0
+        course[12] = 0
 
-    course[14], course[15], course[16], course[17]  = getreqs(term, course[0])
+    course[13], course[14], course[15], course[16]  = getreqs(term, course[0])
     v = " ?,"*len(course)
     v = v[:-1]
     sql = "INSERT INTO courses VALUES ("+v+")"
@@ -111,22 +99,23 @@ def getreqs(term, crn):
     tr = reqbs.find_all('tr')
     if (len(tr) < 4):
         return ('', '', '', '')
-    prereq = tr[3].td.string
+    prereq = tr[3].td.string.strip()
     print(prereq)
     if (len(tr) < 6):
         return (prereq, '', '', '')
-    coreq = tr[5].td.string
+    coreq = tr[5].td.string.strip()
     print(coreq)
     if (len(tr) < 8):
         return (prereq, coreq, '', '')
-    restrict = next(tr[7].strings)
+    restrict = next(tr[7].strings).strip()
+    restrict = re.sub("/Program", "", restrict)
     print(restrict)
     if (len(tr) < 13):
         return (prereq, coreq, restrict, '')
     placegen = tr[12].strings
     next(placegen)
     next(placegen)
-    place = next(placegen)
+    place = next(placegen).strip()
     print(place)
     return (prereq, coreq, restrict, place)
 
@@ -151,7 +140,6 @@ for term in terms:
             Subject text,
             ID  text,
             Attributes text,
-            COLL text,
             Title text,
             Instructor text,
             Credits int,
