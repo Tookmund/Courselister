@@ -46,6 +46,7 @@ input[type="submit"] {
 
 	--wm-green: #115740;
 	--wm-gold:  #B9975B;
+	--wm-silver:  #D0D3D4;
 }
 
 body {
@@ -78,4 +79,8 @@ input[type=checkbox], input[type=radio] {
     vertical-align: middle;
     position: relative;
     bottom: 1px;
+}
+
+a {
+	color: var(--wm-silver);
 }
