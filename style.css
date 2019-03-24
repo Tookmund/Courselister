@@ -50,11 +50,14 @@ input[type="submit"] {
 }
 
 body {
-	margin-left: 10%;
-	margin-right: 10%;
 	font-family: var(--serif-fonts);
 	background-color: var(--wm-green);
 	color: var(--wm-gold);
+}
+
+#forms {
+	margin-left: 10%;
+	margin-right: 10%;
 }
 
 .submit {

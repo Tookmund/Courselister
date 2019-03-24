@@ -11,78 +11,80 @@
 		<script src="script.js" defer></script>
 	</head>
 	<body>
-		<h1>W&M Unofficial Courselister</h1>
-		<form id='term'>
-		</form>
-		<h2 id='termname'>NO TERM LOADED</h2>
-		<form id='search' autocomplete='off'>
-			<div class='autocomplete'>
-				<label>Subject</label>
-				<input type='text' id='Subject' placeholder="e.g. Computer Science" />
-			</div>
-			<div class='autocomplete'>
-				<label>Title</label>
-				<input type='text' id='Title' />
-			</div>
-			<div class='autocomplete'>
-				<label>ID</label>
-				<input type='text' id='ID' />
-			</div>
-			<div class='autocomplete'>
-				<label>Instructor</label>
-				<input type='text' id='Instructor' />
-			</div>
-			<div class='autocomplete'>
-				<label>Attribute</label>
-				<input type='text' id='Attributes' placeholder='e.g. CSI, C200' />
-			</div>
-			<div id='Days' class='autocomplete'>
-				<label>Days</label>
-				<input type='checkbox' value='M' id='M'/>
-				<label for='M'>Monday</label>
-				<input type='checkbox' value='T' id='T'/>
-				<label for='T'>Tuesday</label>
-				<input type='checkbox' value='W' id='W' />
-				<label for='W'>Wednesday</label>
-				<input type='checkbox' value='R' id='R' />
-				<label for='R'>Thursday</label>
-				<input type='checkbox' value='F' id='F' />
-				<label for='F'>Friday</label>
-			</div>
-			<div class='autocomplete'>
-				<label>Start at or After</label>
-				<input type='text' id='Start' />
-			</div>
-			<div class='autocomplete'>
-				<label>End at or Before</label>
-				<input type='text' id='End' />
-			</div>
-			<div class='autocomplete'>
-				<label>Place</label>
-				<input type='text' id='Place' />
-			</div>
-			<div class='autocomplete'>
-				<label>Restrictions</label>
-				<input type='text' id='Restrictions' />
-			</div>
-			<div class='autocomplete'>
-				<label>Prerequisites</label>
-				<input type='text' id='Prerequisites' />
-			</div>
-			<div class='autocomplete'>
-				<label>Corequisites</label>
-				<input type='text' id='Corequisites' />
-			</div>
-			<label>Status</label>
-			<select id='Status'>
-				<option value=''>All
-				<option value='1'>Open</option>
-				<option value='0'>Closed</option>
-			</select>
-			<div class='submit'>
-				<input type='submit' value="Search" />
-			</div>
-		</form>
+		<div id='forms'>
+			<h1>W&M Unofficial Courselister</h1>
+			<form id='term'>
+			</form>
+			<h2 id='termname'>NO TERM LOADED</h2>
+			<form id='search' autocomplete='off'>
+				<div class='autocomplete'>
+					<label>Subject</label>
+					<input type='text' id='Subject' placeholder="e.g. Computer Science" />
+				</div>
+				<div class='autocomplete'>
+					<label>Title</label>
+					<input type='text' id='Title' />
+				</div>
+				<div class='autocomplete'>
+					<label>ID</label>
+					<input type='text' id='ID' />
+				</div>
+				<div class='autocomplete'>
+					<label>Instructor</label>
+					<input type='text' id='Instructor' />
+				</div>
+				<div class='autocomplete'>
+					<label>Attribute</label>
+					<input type='text' id='Attributes' placeholder='e.g. CSI, C200' />
+				</div>
+				<div id='Days' class='autocomplete'>
+					<label>Days</label>
+					<input type='checkbox' value='M' id='M'/>
+					<label for='M'>Monday</label>
+					<input type='checkbox' value='T' id='T'/>
+					<label for='T'>Tuesday</label>
+					<input type='checkbox' value='W' id='W' />
+					<label for='W'>Wednesday</label>
+					<input type='checkbox' value='R' id='R' />
+					<label for='R'>Thursday</label>
+					<input type='checkbox' value='F' id='F' />
+					<label for='F'>Friday</label>
+				</div>
+				<div class='autocomplete'>
+					<label>Start at or After</label>
+					<input type='text' id='Start' />
+				</div>
+				<div class='autocomplete'>
+					<label>End at or Before</label>
+					<input type='text' id='End' />
+				</div>
+				<div class='autocomplete'>
+					<label>Place</label>
+					<input type='text' id='Place' />
+				</div>
+				<div class='autocomplete'>
+					<label>Restrictions</label>
+					<input type='text' id='Restrictions' />
+				</div>
+				<div class='autocomplete'>
+					<label>Prerequisites</label>
+					<input type='text' id='Prerequisites' />
+				</div>
+				<div class='autocomplete'>
+					<label>Corequisites</label>
+					<input type='text' id='Corequisites' />
+				</div>
+				<label>Status</label>
+				<select id='Status'>
+					<option value=''>All
+					<option value='1'>Open</option>
+					<option value='0'>Closed</option>
+				</select>
+				<div class='submit'>
+					<input type='submit' value="Search" />
+				</div>
+			</form>
+		</div>
 		<div id='results'></div>
 	</body>
 </html>
