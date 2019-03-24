@@ -136,6 +136,16 @@ document.getElementById("search").addEventListener('submit', function (e) {
 			if (d.columns[row] == 'Title') {
 				fin += "<td><a href='"+url+"'>"+d.values[c][row]+"</a></td>";
 			}
+			else if (d.columns[row] == 'status') {
+				fin += "<td>";
+				if (d.values[c][row] == '1') {
+					fin += "Open";
+				}
+				else {
+					fin += "Closed";
+				}
+				fin += "</td>";
+			}
 			else {
 				fin += '<td>'+d.values[c][row]+'</td>';
 			}
