@@ -73,7 +73,7 @@ th, td {
 	border-bottom: 3px solid var(--wm-gold);
 }
 td {
-	text-align: right;
+	text-align: left;
 }
 input[type=checkbox], input[type=radio] {
     vertical-align: middle;
