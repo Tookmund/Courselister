@@ -113,8 +113,7 @@ def getreqs(term, crn):
     next(placegen)
     next(placegen)
     place = next(placegen).strip()
-    place = re.sub("--", ":", place)
-    place = re.sub(":", ": ", place)
+    place = re.sub("--|:", " ", place)
     print(place)
     return (prereq, coreq, restrict, place)
 
