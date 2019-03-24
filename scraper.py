@@ -57,6 +57,7 @@ def parserow(row, c):
     attr = row[2].string.split(',')
     course[3] = row[2].string
     course[4] = row[3].string.strip()
+    course[4] = re.sub(r'\s+', ' ', course[4])
     print(course[4])
     course[5] = row[4].string.strip()
     course[6] = row[5].string
