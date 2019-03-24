@@ -110,7 +110,6 @@ document.getElementById("search").addEventListener('submit', function (e) {
 	if (terms == 0) {
 		searchql = searchql.slice(0, -7);
 	}
-	console.log(searchql);
 	getresults(searchql);
 
 	for (i in inps) {
@@ -125,8 +124,11 @@ document.getElementById("search").addEventListener('submit', function (e) {
 }, false);
 
 var lastSearch = '';
+var orderbyql = '';
 function getresults(searchql) {
 	lastSearch = searchql;
+	searchql += ' '+orderbyql;
+	console.log(searchql);
 	var results = document.getElementById('results');
 	var r = db.exec(searchql);
 	if (r.length == 0) {
@@ -138,7 +140,9 @@ function getresults(searchql) {
 	results.innerHTML = '';
 	var fin = '<table><tr>';
 	for (c in d.columns) {
-		fin += '<th>'+d.columns[c]+'</th>';
+		fin += '<th><a href="javascript:orderBy(';
+		fin += "'"+d.columns[c]+"'";
+		fin += ')">'+d.columns[c]+"</a></th>";
 	}
 	fin += '</tr>';
 	for (c in d.values) {
@@ -171,4 +175,9 @@ function getresults(searchql) {
 	fin += '</table>';
 	results.innerHTML = fin;
 	results.scrollIntoView();
+}
+
+function orderBy(id) {
+	orderbyql = "ORDER BY "+id;
+	getresults(lastSearch);
 }
