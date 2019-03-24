@@ -61,11 +61,15 @@ def parserow(row, c):
     if not isinstance(attr, list):
         attr = [attr]
     for item in attr:
-        if item in ATTRS:
-            course[3] = item
-        for match in coll.findall(item):
-            course[4] += item.strip()+' & '
-        course[4] = course[4][:-3]
+        if item.strip() in ATTRS:
+            course[3] += item.strip()+' & '
+        else:
+            for match in coll.findall(item):
+                course[4] += item.strip()+' & '
+    if (course[3] != ''):
+            course[3] = course[3][:-3]
+    if (course[4] != ''):
+            course[4] = course[4][:-3]
 
     course[5] = row[3].string.strip()
     print(course[5])
