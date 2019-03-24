@@ -53,9 +53,10 @@ coll = re.compile(r'C\d{2}.')
 def parserow(row, c):
     course = ["" for i in range(14)]
     course[0] = row[0].a.string
-    ident = row[1].string.strip().split(" ")
+    row[1] = row[1].string.strip()
+    ident = row[1].split(" ")
     course[1] = subjdict[ident[0]]
-    course[2] = ' '.join(ident[1:])
+    course[2] = row[1]
     attr = row[2].string.split(',')
     if not isinstance(attr, list):
         attr = [attr]
