@@ -74,9 +74,9 @@ document.getElementById("search").addEventListener('submit', function (e) {
 			if (terms > 0) {
 				searchql += " AND "
 			}
-			if (inps[i].id == 'start') {
+			if (inps[i].id == 'Start') {
 				searchql += inps[i].id +' >= '+inps[i].value;
-			} else if (inps[i].id == 'end') {
+			} else if (inps[i].id == 'End') {
 				searchql += inps[i].id +' <= '+inps[i].value;
 			} else {
 				searchql += inps[i].id+" LIKE '%"+inps[i].value+"%'";
@@ -84,7 +84,7 @@ document.getElementById("search").addEventListener('submit', function (e) {
 			terms++;
 		}
 	}
-	var days = document.getElementById('days').getElementsByTagName('input');
+	var days = document.getElementById('Days').getElementsByTagName('input');
 	dstr = "";
 	for (d in days) {
 		if (days[d].type == 'checkbox') {
@@ -97,10 +97,10 @@ document.getElementById("search").addEventListener('submit', function (e) {
 		if (terms > 0) {
 			searchql += " AND ";
 		}
-		searchql += "days LIKE '"+dstr+"%'";
+		searchql += "Days LIKE '"+dstr+"%'";
 		terms++;
 	}
-	var oc = document.getElementById('status');
+	var oc = document.getElementById('Status');
 	if (oc.value != '') {
 		if (terms > 0) {
 				searchql += " AND "
@@ -136,7 +136,7 @@ document.getElementById("search").addEventListener('submit', function (e) {
 			if (d.columns[row] == 'Title') {
 				fin += "<td><a href='"+url+"'>"+d.values[c][row]+"</a></td>";
 			}
-			else if (d.columns[row] == 'status') {
+			else if (d.columns[row] == 'Status') {
 				fin += "<td>";
 				if (d.values[c][row] == '1') {
 					fin += "Open";

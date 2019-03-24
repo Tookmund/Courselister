@@ -119,19 +119,19 @@ for term in terms:
             CREATE TABLE courses
             (
             CRN int,
-            Subj text,
+            Subject text,
             ID  text,
-            Attr text,
+            Attributes text,
             COLL text,
             Title text,
-            Instr text,
-            credits int,
-            days text,
-            start int,
-            end int,
-            enrolled int,
-            seats int,
-            status int
+            Instructor text,
+            Credits int,
+            Days text,
+            Start int,
+            End int,
+            Enrolled int,
+            Seats int,
+            Status int
             )
             ''')
 
