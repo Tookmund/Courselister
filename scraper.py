@@ -46,9 +46,6 @@ for opt in subjc.children:
             subjdict[opt['value']] = opt.string.strip()
             subjs.append(opt['value'])
 
-ATTRS = ['CSI', 'NQR', 'ALV']
-
-
 coll = re.compile(r'C\d{2}.')
 def parserow(row, c):
     course = ["" for i in range(14)]
@@ -61,11 +58,11 @@ def parserow(row, c):
     if not isinstance(attr, list):
         attr = [attr]
     for item in attr:
-        if item.strip() in ATTRS:
-            course[3] += item.strip()+' & '
+        match = coll.findall(item)
+        if len(match) > 0:
+            course[4] += match[0].strip()+' & '
         else:
-            for match in coll.findall(item):
-                course[4] += item.strip()+' & '
+            course[3] += item.strip()+' & '
     if (course[3] != ''):
             course[3] = course[3][:-3]
     if (course[4] != ''):
