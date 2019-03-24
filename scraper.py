@@ -48,7 +48,7 @@ for opt in subjc.children:
 
 coll = re.compile(r'C\d{2}.')
 def parserow(row, c):
-    course = ["" for i in range(14)]
+    course = ["" for i in range(18)]
     course[0] = row[0].a.string
     row[1] = row[1].string.strip()
     ident = row[1].split(" ")
@@ -94,12 +94,41 @@ def parserow(row, c):
     if row[10].string == "OPEN":
         course[13] = 1
     else:
-        course[12] = 0
+        course[13] = 0
+
+    course[14], course[15], course[16], course[17]  = getreqs(term, course[0])
     v = " ?,"*len(course)
     v = v[:-1]
     sql = "INSERT INTO courses VALUES ("+v+")"
     c.execute(sql, course)
 
+def getreqs(term, crn):
+    reqs = requests.get("https://courselist.wm.edu/courselist/courseinfo/addInfo?fterm="+term+"&fcrn="+crn)
+    if reqs.status_code != 200:
+        print(reqs.status_code)
+        sys.exit(reqs.status_code)
+    reqbs = bs4.BeautifulSoup(reqs.text, 'lxml')
+    tr = reqbs.find_all('tr')
+    if (len(tr) < 4):
+        return ('', '', '', '')
+    prereq = tr[3].td.string
+    print(prereq)
+    if (len(tr) < 6):
+        return (prereq, '', '', '')
+    coreq = tr[5].td.string
+    print(coreq)
+    if (len(tr) < 8):
+        return (prereq, coreq, '', '')
+    restrict = next(tr[7].strings)
+    print(restrict)
+    if (len(tr) < 13):
+        return (prereq, coreq, restrict, '')
+    placegen = tr[12].strings
+    next(placegen)
+    next(placegen)
+    place = next(placegen)
+    print(place)
+    return (prereq, coreq, restrict, place)
 
 for term in terms:
     # term = terms[2]
@@ -131,7 +160,11 @@ for term in terms:
             End int,
             Enrolled int,
             Seats int,
-            Status int
+            Status int,
+            Prerequisites text,
+            Corequisites text,
+            Restrictions text,
+            Place text
             )
             ''')
 
