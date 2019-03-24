@@ -58,15 +58,7 @@ def parserow(row, c):
     course[3] = row[2].string
     course[4] = row[3].string.strip()
     print(course[4])
-    names = row[4].string.split(';')
-    for n in names:
-        fl = n.split(',')
-        if len(fl) == 1:
-            course[5] += fl[0].strip()
-        else:
-            course[5] += fl[1].strip()+" "+fl[0].strip()
-        course[5] += ' & '
-    course[5] = course[5][:-3]
+    course[5] = row[4].string.strip()
     course[6] = row[5].string
     dt = row[6].string.split(":")
     if len(dt) == 2:
