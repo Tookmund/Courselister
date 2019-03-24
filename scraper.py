@@ -92,12 +92,12 @@ def getreqs(term, crn):
     if (len(tr) < 4):
         return ('', '', '', '')
     prereq = tr[3].td.string.strip()
-    prereq = re.sub(r"\s*", " ", prereq)
+    prereq = re.sub(r"\s+", " ", prereq)
     print(prereq)
     if (len(tr) < 6):
         return (prereq, '', '', '')
     coreq = tr[5].td.string.strip()
-    coreq = re.sub(r"\s*", " ", coreq)
+    coreq = re.sub(r"\s+", " ", coreq)
     print(coreq)
     if (len(tr) < 8):
         return (prereq, coreq, '', '')
