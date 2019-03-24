@@ -111,6 +111,22 @@ document.getElementById("search").addEventListener('submit', function (e) {
 		searchql = searchql.slice(0, -7);
 	}
 	console.log(searchql);
+	getresults(searchql);
+
+	for (i in inps) {
+		if (inps[i].type == 'checkbox') {
+			inps[i].checked = false;
+		}
+		if (inps[i].type == 'text' && inps[i].value != '') {
+			inps[i].value = '';
+		}
+	}
+
+}, false);
+
+var lastSearch = '';
+function getresults(searchql) {
+	lastSearch = searchql;
 	var results = document.getElementById('results');
 	var r = db.exec(searchql);
 	if (r.length == 0) {
@@ -155,4 +171,4 @@ document.getElementById("search").addEventListener('submit', function (e) {
 	fin += '</table>';
 	results.innerHTML = fin;
 	results.scrollIntoView();
-}, false);
+}
