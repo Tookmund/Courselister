@@ -101,7 +101,7 @@ def getreqs(term, crn):
         return (prereq, coreq, '', '')
     restrict = next(tr[7].strings).strip()
     restrict = re.sub("/Program", "", restrict)
-    restrict = re.sub(":", ": ", restrict)
+    restrict = re.sub(r":(\S)", r": \1", restrict)
     print(restrict)
     if (len(tr) < 13):
         return (prereq, coreq, restrict, '')
@@ -109,6 +109,8 @@ def getreqs(term, crn):
     next(placegen)
     next(placegen)
     place = next(placegen).strip()
+    place = re.sub("--", ":", place)
+    place = re.sub(":", ": ", place)
     print(place)
     return (prereq, coreq, restrict, place)
 
