@@ -101,7 +101,7 @@ def getreqs(term, crn):
         return (prereq, coreq, '', '')
     restrict = next(tr[7].strings).strip()
     restrict = re.sub("SocialClass/Program:", "", restrict)
-    restrict = re.sub(r"(:|,)(\S)", r": \2", restrict)
+    restrict = re.sub(r"[:,](\S)", r": \1", restrict)
     print(restrict)
     if (len(tr) < 13):
         return (prereq, coreq, restrict, '')
