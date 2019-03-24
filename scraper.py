@@ -100,8 +100,8 @@ def getreqs(term, crn):
     if (len(tr) < 8):
         return (prereq, coreq, '', '')
     restrict = next(tr[7].strings).strip()
-    restrict = re.sub("/Program", "", restrict)
-    restrict = re.sub(r":(\S)", r": \1", restrict)
+    restrict = re.sub("SocialClass/Program:", "", restrict)
+    restrict = re.sub(r"(:|,)(\S)", r": \2", restrict)
     print(restrict)
     if (len(tr) < 13):
         return (prereq, coreq, restrict, '')
