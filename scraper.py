@@ -62,9 +62,9 @@ def parserow(row, c):
     for item in attr:
         if item in ATTRS:
             course[3] = item
-        match = coll.search(item)
-        if match:
-            course[4] = item[1:]
+        for match in coll.findall(item):
+            course[4] += item.strip()+' & '
+        course[4] = course[4][:-3]
 
     course[5] = row[3].string.strip()
     print(course[5])
@@ -113,9 +113,6 @@ for term in terms:
     os.rename(term+'.db', term+'.db.bak')
     db = sqlite3.connect(term+'.db')
     c = db.cursor()
-    # CRN int
-    # coll 0 = none, 100, 150, 200, 30D, 30G, 30C etc.
-    # TODO Multiple COLL attributes
     c.execute('''
             CREATE TABLE courses
             (
