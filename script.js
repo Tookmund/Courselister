@@ -62,6 +62,11 @@ termselem.addEventListener('submit', function (e) {
 
 document.getElementById("search").addEventListener('submit', function (e) {
 	e.preventDefault();
+	if (db == null) {
+		results.innerHTML = "PLEASE LOAD A TERM";
+		results.scrollIntoView();
+		return;
+	}
 	var searchql = "SELECT * FROM courses WHERE ";
 	var search = document.getElementById('search');
 	var inps = search.getElementsByTagName('input');
