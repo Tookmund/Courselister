@@ -8,7 +8,8 @@ import sqlite3
 import json
 from datetime import datetime
 
-cs = requests.get("https://courselist.wm.edu/courselist/")
+session = requests.Session()
+cs = session.get("https://courselist.wm.edu/courselist/")
 if cs.status_code != 200:
     print("Course List", cs.status_code)
     sys.exit(1)
@@ -84,7 +85,7 @@ def parserow(row, c):
     c.execute(sql, course)
 
 def getreqs(term, crn):
-    reqs = requests.get("https://courselist.wm.edu/courselist/courseinfo/addInfo?fterm="+term+"&fcrn="+crn)
+    reqs = session.get("https://courselist.wm.edu/courselist/courseinfo/addInfo?fterm="+term+"&fcrn="+crn)
     if reqs.status_code != 200:
         print(reqs.status_code)
         sys.exit(reqs.status_code)
@@ -120,7 +121,7 @@ for term in terms:
     # term = terms[2]
     # finals = {}
     # finals[term] = None
-    # finalreq = requests.get("https://www.wm.edu/offices/registrar/calendarsandexams/examschedules/fall19exam/index.php")
+    # finalreq = session.get("https://www.wm.edu/offices/registrar/calendarsandexams/examschedules/fall19exam/index.php")
     # if finalreq.status_code == 200:
     #     finals[term] = {}
     #     finalp = bs4.BeautifulSoup(finalreq.text, 'lxml')
@@ -154,7 +155,7 @@ for term in terms:
             ''')
 
     for subj in subjs:
-        r = requests.get("https://courselist.wm.edu/courselist/courseinfo/searchresults?term_code="+term+"&term_subj="+subj+"&attr=0&attr2=0&levl=0&status=0&ptrm=0&search=Search")
+        r = session.get("https://courselist.wm.edu/courselist/courseinfo/searchresults?term_code="+term+"&term_subj="+subj+"&attr=0&attr2=0&levl=0&status=0&ptrm=0&search=Search")
         if r.status_code != 200:
             print(term_code, subj, r.status_code)
             sys.exit(2)
