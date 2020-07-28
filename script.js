@@ -52,7 +52,6 @@ xhr.send();
 termselem.addEventListener('submit', function (e) {
 	e.preventDefault();
 	var v = termselem.getElementsByTagName('select')[0];
-	document.getElementById('termname').innerHTML = v.value;
 	curterm = v.value;
 });
 
