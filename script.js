@@ -12,62 +12,59 @@ function getvals(v) {
 	return arr;
 }
 
-function getdb(name) {
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', name+'.db', true);
-	xhr.responseType = 'arraybuffer';
-	xhr.onload = function(e) {
-		var uInt8Array = new Uint8Array(this.response);
-		db = new SQL.Database(uInt8Array);
-		var s = document.getElementById("search");
-		var inps = s.getElementsByTagName("input");
-		for (i in inps) {
-			if (inps[i].type == 'text') {
-				autocomp(inps[i].id);
-			}
-		}
-		console.log(name);
-	};
-	xhr.send();
-}
 
+var curterm = null;
 
-var termreq = new XMLHttpRequest();
 var termselem = document.getElementById('term');
-termreq.open('GET', 'terms.json', true);
-termreq.responseType = 'json';
-var termdict = null;
-termreq.onload = function(e) {
-	termdict = this.response;
-	var hstr = "<p>Last Updated: "+termdict['updated']+"</p><select>";
-	for (const [value, name] of Object.entries(termdict)) {
-		if (value != 'updated') {
-			hstr += '<option value='+value+'>'+name+'</option>';
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'https://f000.backblazeb2.com/file/wmcoursescraper/courses.db', true);
+xhr.responseType = 'arraybuffer';
+xhr.onload = function(e) {
+	var uInt8Array = new Uint8Array(this.response);
+	db = new SQL.Database(uInt8Array);
+	var s = document.getElementById("search");
+	var inps = s.getElementsByTagName("input");
+	for (i in inps) {
+		if (inps[i].type == 'text') {
+			autocomp(inps[i].id);
 		}
+	}
+	var r = db.exec("SELECT name from sqlite_master where type == 'table' and name != 'subjects' and name != 'semesterdates';");
+	if (r.length == 0) {
+		termselem.innerHTML = "FAILED TO LOAD DATA!";
+		return;
+	}
+	console.log(r);
+	var d = r[0];
+	curterm = d.values[0][0];
+	var hstr = "<select>";
+	for (var i in d.values) {
+			hstr += '<option value='+d.values[i][0]+'>'+d.values[i][0]+'</option>';
 	}
 	hstr += "</select>";
 	hstr += "<div class='submit'><input type='submit' value='Load Term' /></div>";
 	termselem.innerHTML = hstr;
 };
-termreq.send();
+
+xhr.send();
 
 
 termselem.addEventListener('submit', function (e) {
 	e.preventDefault();
 	var v = termselem.getElementsByTagName('select')[0];
-	getdb(v.value);
-	document.getElementById('termname').innerHTML = termdict[v.value];
+	document.getElementById('termname').innerHTML = v.value;
+	curterm = v.value;
 });
 
 
 document.getElementById("search").addEventListener('submit', function (e) {
 	e.preventDefault();
 	if (db == null) {
-		results.innerHTML = "PLEASE LOAD A TERM";
+		results.innerHTML = "PLEASE WAIT";
 		results.scrollIntoView();
 		return;
 	}
-	var searchql = "SELECT * FROM courses WHERE ";
+	var searchql = "SELECT * FROM "+curterm+" WHERE ";
 	var search = document.getElementById('search');
 	var inps = search.getElementsByTagName('input');
 	var terms = 0;

@@ -20,7 +20,7 @@ function autocomp(sql) {
       /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
 	  var wild = "%"+val+"%";
-	  var acompsql = db.prepare("SELECT DISTINCT "+sql+" FROM courses WHERE "+sql+" LIKE ? LIMIT 10");
+	  var acompsql = db.prepare("SELECT DISTINCT "+sql+" FROM "+curterm+" WHERE "+sql+" LIKE ? LIMIT 10");
 	  acompsql.bind([wild]);
       /*for each item in the array...*/
 	  while(acompsql.step()) {
