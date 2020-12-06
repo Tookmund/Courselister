@@ -166,6 +166,14 @@ function getresults(searchql) {
 				}
 				fin += "</td>";
 			}
+			else if (d.columns[row] == 'FinalID') {
+				fin += "<td>"
+				var finalr = db.exec("SELECT * FROM finals WHERE id == "+d.values[c][row]+";");
+				if (finalr.length == 0) continue;
+				var finaldata = finalr[0].values[0];
+				fin += finaldata[3]+", "+finaldata[1]+" - "+finaldata[2];
+				fin += "</td>"
+			}
 			else {
 				fin += '<td>'+d.values[c][row]+'</td>';
 			}
