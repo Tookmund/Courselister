@@ -29,7 +29,7 @@ xhr.onload = function(e) {
 			autocomp(inps[i].id);
 		}
 	}
-	var r = db.exec("SELECT name from sqlite_master where type == 'table' and name != 'subjects' and name != 'semesterdates';");
+	var r = db.exec("SELECT ID,Name from semesters;")
 	if (r.length == 0) {
 		termselem.innerHTML = "FAILED TO LOAD DATA!";
 		return;
@@ -39,7 +39,7 @@ xhr.onload = function(e) {
 	curterm = d.values[0][0];
 	var hstr = "<select>";
 	for (var i in d.values) {
-			hstr += '<option value='+d.values[i][0]+'>'+d.values[i][0]+'</option>';
+			hstr += '<option value='+d.values[i][0]+'>'+d.values[i][1]+'</option>';
 	}
 	hstr += "</select>";
 	hstr += "<div class='submit'><input type='submit' value='Load Term' /></div>";
@@ -63,7 +63,7 @@ document.getElementById("search").addEventListener('submit', function (e) {
 		results.scrollIntoView();
 		return;
 	}
-	var searchql = "SELECT * FROM "+curterm+" WHERE ";
+	var searchql = "SELECT * FROM courses WHERE Semester == "+curterm+" AND ";
 	var search = document.getElementById('search');
 	var inps = search.getElementsByTagName('input');
 	var terms = 0;
