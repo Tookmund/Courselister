@@ -42,14 +42,13 @@ xhr.onload = function(e) {
 			hstr += '<option value='+d.values[i][0]+'>'+d.values[i][1]+'</option>';
 	}
 	hstr += "</select>";
-	hstr += "<div class='submit'><input type='submit' value='Load Term' /></div>";
 	termselem.innerHTML = hstr;
 };
 
 xhr.send();
 
 
-termselem.addEventListener('submit', function (e) {
+termselem.addEventListener('input', function (e) {
 	e.preventDefault();
 	var v = termselem.getElementsByTagName('select')[0];
 	curterm = v.value;
