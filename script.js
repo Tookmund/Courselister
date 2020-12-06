@@ -62,7 +62,7 @@ document.getElementById("search").addEventListener('submit', function (e) {
 		results.scrollIntoView();
 		return;
 	}
-	var searchql = "SELECT * FROM courses WHERE Semester == "+curterm+" AND ";
+	var searchql = "SELECT CRN,Subject,ID,Section,Attributes,Title,Instructor,Days,Start,End,Enrolled,Seats,Description,Credits,Prerequisites,Corequisites,Restrictions,Status,Place,FinalID FROM courses WHERE Semester == "+curterm+" AND ";
 	var search = document.getElementById('search');
 	var inps = search.getElementsByTagName('input');
 	var terms = 0;
