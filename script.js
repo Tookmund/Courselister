@@ -34,7 +34,6 @@ xhr.onload = function(e) {
 		termselem.innerHTML = "FAILED TO LOAD DATA!";
 		return;
 	}
-	console.log(r);
 	var d = r[0];
 	curterm = d.values[0][0];
 	var hstr = "<select>";
@@ -128,7 +127,7 @@ var orderbyql = '';
 function getresults(searchql) {
 	lastSearch = searchql;
 	searchql += ' '+orderbyql;
-	console.log(searchql);
+	//console.log(searchql);
 	var results = document.getElementById('results');
 	var r = db.exec(searchql);
 	if (r.length == 0) {
