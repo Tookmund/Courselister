@@ -61,7 +61,7 @@ document.getElementById("search").addEventListener('submit', function (e) {
 		results.scrollIntoView();
 		return;
 	}
-	var searchql = "SELECT CRN,Subject,ID,Section,Attributes,Title,Instructor,Days,Start,End,Enrolled,Seats,Status,Description,Credits,Prerequisites,Corequisites,Restrictions,Place,FinalID FROM courses WHERE Semester == "+curterm+" AND ";
+	var searchql = "SELECT CRN,Subject,ID,Section,Attributes,Title,Instructor,Days,Start,End,Enrolled,Seats,Status,Description,Credits,Prerequisites,Corequisites,Restrictions,Place,Final FROM courses WHERE Semester == "+curterm+" AND ";
 	var search = document.getElementById('search');
 	var inps = search.getElementsByTagName('input');
 	var terms = 0;
@@ -165,7 +165,7 @@ function getresults(searchql) {
 				}
 				fin += "</td>";
 			}
-			else if (d.columns[row] == 'FinalID') {
+			else if (d.columns[row] == 'Final') {
 				fin += "<td>"
 				var finalr = db.exec("SELECT * FROM finals WHERE id == "+d.values[c][row]+";");
 				if (finalr.length == 0) continue;
