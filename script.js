@@ -1,5 +1,7 @@
 var db = null;
 var acompsql = null;
+var curterm = null;
+var termlist = [];
 
 function getvals(v) {
 	arr = [];
@@ -12,53 +14,43 @@ function getvals(v) {
 	return arr;
 }
 
-function getdb(name) {
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', name+'.db', true);
-	xhr.responseType = 'arraybuffer';
-	xhr.onload = function(e) {
-		var uInt8Array = new Uint8Array(this.response);
-		db = new SQL.Database(uInt8Array);
-		var s = document.getElementById("search");
-		var inps = s.getElementsByTagName("input");
-		for (i in inps) {
-			if (inps[i].type == 'text') {
-				autocomp(inps[i].id);
-			}
+function setupautocomp() {
+	var s = document.getElementById("search");
+	var inps = s.getElementsByTagName("input");
+	for (i in inps) {
+	if (inps[i].type == 'text') {
+		autocomp(inps[i].id);
 		}
-		console.log(name);
-	};
-	xhr.send();
+	}
 }
 
-
-var termreq = new XMLHttpRequest();
 var termselem = document.getElementById('term');
-termreq.open('GET', 'terms.json', true);
-termreq.responseType = 'json';
-var termdict = null;
-termreq.onload = function(e) {
-	termdict = this.response;
-	var hstr = "<p>Last Updated: "+termdict['updated']+"</p><select>";
-	for (const [value, name] of Object.entries(termdict)) {
+
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'http://coursescraper.tookmund.com/courses.db', true);
+xhr.responseType = 'arraybuffer';
+xhr.onload = function(e) {
+	var uInt8Array = new Uint8Array(this.response);
+	db = new SQL.Database(uInt8Array);
+	var hstr = "<p>Last Modified: "+this.getResponseHeader("Last-Modified")+"</p><select>";
+	var t = db.exec("SELECT name FROM sqlite_master WHERE type='table'");
+	console.log(t);
+	for (i in termlist) {
 		if (value != 'updated') {
-			hstr += '<option value='+value+'>'+name+'</option>';
+			hstr += '<option value='+i+'>'+termlist[i]+'</option>';
 		}
 	}
 	hstr += "</select>";
 	hstr += "<div class='submit'><input type='submit' value='Load Term' /></div>";
 	termselem.innerHTML = hstr;
+
+	termselem.addEventListener('submit', function (e) {
+		e.preventDefault();
+		var v = termselem.getElementsByTagName('select')[0];
+		document.getElementById('termname').innerHTML = termdict[v.value];
+	});
 };
-termreq.send();
-
-
-termselem.addEventListener('submit', function (e) {
-	e.preventDefault();
-	var v = termselem.getElementsByTagName('select')[0];
-	getdb(v.value);
-	document.getElementById('termname').innerHTML = termdict[v.value];
-});
-
+xhr.send();
 
 document.getElementById("search").addEventListener('submit', function (e) {
 	e.preventDefault();
