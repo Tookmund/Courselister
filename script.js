@@ -63,7 +63,8 @@ xhr.onload = function(e) {
 	rtstring += " "+rtseconds + " second";
 	if (rtseconds > 1) rtstring += "s";
 
-	document.getElementById("runtime").innerHTML = "<p>Data Last Updated: "+dates[1]+"</p>"+
+	document.getElementById("runtime").innerHTML =
+		"<p>Data Last Updated: "+dates[1].toLocaleString()+"</p>"+
 		"<p>Runtime of last scrape: "+rtstring+"</p>";
 };
 
