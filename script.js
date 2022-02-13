@@ -42,6 +42,29 @@ xhr.onload = function(e) {
 	}
 	hstr += "</select>";
 	termselem.innerHTML = hstr;
+
+	var runtime = db.exec("SELECT start,end FROM runtime");
+	var dates = runtime[0].values[0].map(d => new Date(d));
+	console.log(dates);
+	// getTime() is in milliseconds
+	var rttotalseconds = (dates[1].getTime() - dates[0].getTime()) / 1000;
+	var rtminutes = Math.floor(rttotalseconds / 60);
+	var rtstring = "";
+	if (rtminutes > 60) {
+		var rthour = Math.floor(rtminutes / 60);
+		rtminutes = rtminutes % 60;
+		rtstring += rthour + " hour"
+		if (rthour > 1) rtstring += "s";
+	}
+	rtstring += " "+rtminutes + " minute";
+	if (rtminutes > 1) rtstring += "s"
+
+	var rtseconds = rttotalseconds % 60;
+	rtstring += " "+rtseconds + " second";
+	if (rtseconds > 1) rtstring += "s";
+
+	document.getElementById("runtime").innerHTML = "<p>Data Last Updated: "+dates[1]+"</p>"+
+		"<p>Runtime of last scrape: "+rtstring+"</p>";
 };
 
 xhr.send();
